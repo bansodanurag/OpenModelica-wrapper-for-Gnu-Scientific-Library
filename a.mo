@@ -299,6 +299,7 @@ package gsl
     end GSL_IS_EVEN;
 
     function GSL_MAX
+      //  This function calculates the maximum of two numbers
       input Real a;
       input Real b;
       output Real c;
@@ -308,6 +309,100 @@ package gsl
         Library = "gslcblas",
         Include = "#include<gsl/gsl_math.h>");
     end GSL_MAX;
+
+    function GSL_MAX_DBL
+      //  This function calculates the maximum of the given two floating point numbers
+      input Real a;
+      input Real b;
+      output Real c;
+    
+      external "C" c = GSL_MAX_DBL(a, b) annotation(
+        Inline = true,
+        Library = "gsl",
+        Library = "gslcblas",
+        Include = "#include<gsl/gsl_math.h>");
+    end GSL_MAX_DBL;
+
+    function GSL_MIN_DBL
+      //This function calculates the minimum of two given floating point numbers
+      input Real a;
+      input Real b;
+      output Real c;
+    
+      external "C" c = GSL_MIN_DBL(a, b) annotation(
+        Inline = true,
+        Library = "gsl",
+        Library = "gslcblas",
+        Include = "#include<gsl/gsl_math.h>");
+    end GSL_MIN_DBL;
+
+    function GSL_MAX_INT
+      //  This function calculates the maximum of two given integers
+      input Real a;
+      input Real b;
+      output Real c;
+    
+      external "C" c = GSL_MAX_INT(a, b) annotation(
+        Inline = true,
+        Library = "gsl",
+        Library = "gslcblas",
+        Include = "#include<gsl/gsl_math.h>");
+    end GSL_MAX_INT;
+
+    function GSL_MIN_INT
+      //  This function calculates the minimum of the two numbers
+      input Real a;
+      input Real b;
+      output Real c;
+    
+      external "C" c = GSL_MIN_INT(a, b) annotation(
+        Inline = true,
+        Library = "gsl",
+        Library = "gslcblas",
+        Include = "#include<gsl/gsl_math.h>");
+    end GSL_MIN_INT;
+
+    function GSL_MAX_LDBL
+      //  This function calculates the maximum of two long double numbers
+      input Real a;
+      input Real b;
+      output Real c;
+    
+      external "C" c = GSL_MAX_LDBL(a, b) annotation(
+        Inline = true,
+        Library = "gsl",
+        Library = "gslcblas",
+        Include = "#include<gsl/gsl_math.h>");
+    end GSL_MAX_LDBL;
+
+    function GSL_MIN_LDBL
+      //  This function calculates the minimum of two long double numbers
+      input Real a;
+      input Real b;
+      output Real c;
+    
+      external "C" c = GSL_MIN_LDBL(a, b) annotation(
+        Inline = true,
+        Library = "gsl",
+        Library = "gslcblas",
+        Include = "#include<gsl/gsl_math.h>");
+    end GSL_MIN_LDBL;
+
+    function gsl_fcmp
+      //This function determines whether x and y are approximately equal if they are equal within the range of epsilon it returns zero,if a>b it returns -1 and if b<a it returns 1
+      input Real a;
+      input Real b;
+      output Real c;
+    protected
+      constant Real z = Modelica.Constants.eps;
+    
+      external "C" c = gsl_fcmp(a, b, z) annotation(
+        Library = "gsl",
+        Library = "gslcblas",
+        Include = "#include<gsl/gsl_math.h>");
+    end gsl_fcmp;
+
+    /**/
   end mathematical;
 
   package Permutation
@@ -534,6 +629,71 @@ package gsl
       algorithm
         c := gsl.mathematical.GSL_MAX(a, b);
       end GSL_MAX;
+
+      model GSL_MAX_DBL
+        //  This model gives the maximum of two double numbers by calling the function GSL_MAX_DBL
+        parameter Real a = 2.0;
+        parameter Real b = 3.0;
+        Real c;
+      algorithm
+        c := gsl.mathematical.GSL_MAX_DBL(a, b);
+      end GSL_MAX_DBL;
+
+      model GSL_MIN_DBL
+        //  This model gives the minimum of two double numbers by calling the function GSL_MIN_DBL
+        parameter Real a = 2.0;
+        parameter Real b = 3.0;
+        Real c;
+      algorithm
+        c := gsl.mathematical.GSL_MIN_DBL(a, b);
+      end GSL_MIN_DBL;
+
+      model GSL_MAX_INT
+        //  This model gives the maximum of two integers by calling the function GSL_MAX_INT
+        parameter Real a = 2;
+        parameter Real b = 3;
+        Real c;
+      algorithm
+        c := gsl.mathematical.GSL_MAX_INT(a, b);
+      end GSL_MAX_INT;
+
+      model GSL_MIN_INT
+        //  This model gives the minimum of two integers by calling the function GSL_MIN_INT
+        parameter Real a = 2;
+        parameter Real b = 3;
+        Real c;
+      algorithm
+        c := gsl.mathematical.GSL_MIN_INT(a, b);
+      end GSL_MIN_INT;
+
+      model GSL_MAX_LDBL
+        //  This model gives the maximum of two Real numbers by calling the function GSL_MAX_LDBL
+        parameter Real a = 2.00001;
+        parameter Real b = 3.00001;
+        Real c;
+      algorithm
+        c := gsl.mathematical.GSL_MAX_LDBL(a, b);
+      end GSL_MAX_LDBL;
+
+      model GSL_MIN_LDBL
+        //  This model gives the minimum of two Real by calling the function GSL_MAX_DBL
+        parameter Real a = 2.00001;
+        parameter Real b = 3.00001;
+        Real c;
+      algorithm
+        c := gsl.mathematical.GSL_MIN_LDBL(a, b);
+      end GSL_MIN_LDBL;
+
+      model gsl_fcmp
+        //This model calls the function gsl_fcmp(a,b) and returns zero if they are equal in given range and -1 if a<b and +1 if a>b
+        parameter Real a = 4.0;
+        parameter Real b = 2.2;
+        Real c;
+      algorithm
+        c := gsl.mathematical.gsl_fcmp(a, b);
+      end gsl_fcmp;
+
+      /**/
     end Mathematical;
 
     package Permutation
